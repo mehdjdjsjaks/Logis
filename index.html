@@ -9,20 +9,27 @@
       font-family: monospace;
       font-size: 20px;
       padding: 20px;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
   <div id="output">در حال اتصال به سرور...</div>
+  <audio id="alert" src="https://www.soundjay.com/button/beep-07.wav" preload="auto"></audio>
 
   <script>
     let out = document.getElementById("output");
+    let audio = document.getElementById("alert");
 
     function typeText(text, delay = 100) {
       return new Promise(resolve => {
         let i = 0;
         let interval = setInterval(() => {
-          out.innerHTML += text[i];
+          if (text[i] === "\n") {
+            out.innerHTML += "<br>";
+          } else {
+            out.innerHTML += text[i];
+          }
           i++;
           if (i >= text.length) {
             clearInterval(interval);
@@ -32,23 +39,16 @@
       });
     }
 
-    function vibratePhone() {
-      if (navigator.vibrate) {
-        // ویبره به صورت متناوب برای بیشتر تاثیر
-        navigator.vibrate([500, 300, 500, 300, 500]);
-      }
-    }
-
     async function startFakeVirus() {
       await typeText("\nدر حال ورود به سیستم کاربر...");
+      audio.play();
       await typeText("\nدریافت اطلاعات...");
       await typeText("\nپاک کردن داده‌ها...");
       document.body.style.background = "red";
       document.body.style.color = "white";
-      out.innerHTML += "\n\n😈 ویروس فعال شد!";
-      vibratePhone(); // فعال کردن ویبره
+      out.innerHTML += "<br><br>😈 ویروس فعال شد!";
       await new Promise(r => setTimeout(r, 3000));
-      alert( شوخی بود رفیق! هک نشدی اتک با جوجه کاری نداره  😉 — By Attack");
+      alert("شوخی بود رفیق! هک نشدی اتک با جوجه ها کاری نداره  😉 — By Attack");
       location.reload();
     }
 
