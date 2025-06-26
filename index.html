@@ -10,13 +10,24 @@
       font-size: 20px;
       padding: 20px;
     }
+    #startBtn {
+      padding: 10px 20px;
+      background: lime;
+      color: black;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <div id="output">در حال اتصال به سرور...</div>
+  <button id="startBtn">شروع ویروس 😈</button>
 
   <script>
     let out = document.getElementById("output");
+    let startBtn = document.getElementById("startBtn");
 
     function typeText(text, delay = 100) {
       return new Promise(resolve => {
@@ -33,15 +44,15 @@
     }
 
     async function startFakeVirus() {
+      startBtn.style.display = "none";
       await typeText("\nدر حال ورود به سیستم کاربر...");
       await typeText("\nدریافت اطلاعات...");
       await typeText("\nپاک کردن داده‌ها...");
 
-      // تغییر رنگ
       document.body.style.background = "red";
       document.body.style.color = "white";
 
-      // فعال کردن ویبره ۵ ثانیه‌ای
+      // ویبره 5 ثانیه‌ای
       if (navigator.vibrate) {
         navigator.vibrate(5000);
       }
@@ -53,7 +64,7 @@
       location.reload();
     }
 
-    startFakeVirus();
+    startBtn.addEventListener("click", startFakeVirus);
   </script>
 </body>
 </html>
